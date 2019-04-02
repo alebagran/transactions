@@ -4,7 +4,11 @@ import InputPicker from './../components/InputPicker';
 import InputText from './../components/InputText';
 import InputCurrency from './../components/InputCurrency';
 
-const FormView = ( { fields, onChange, onSubmit } ) => (
+const FormView = ( {
+  fields,
+  onChange,
+  onSubmit,
+  shouldDisable } ) => (
   <Card>
     <CardItem bordered >
       <Text>Nova Transação</Text>
@@ -32,7 +36,10 @@ const FormView = ( { fields, onChange, onSubmit } ) => (
     <CardItem footer bordered >
       <Left />
       <Body>
-        <Button primary onPress={ onSubmit } >
+        <Button
+          primary 
+          onPress={ onSubmit }
+          disabled={ shouldDisable } >
           <Text>Salvar</Text>
         </Button>
       </Body>

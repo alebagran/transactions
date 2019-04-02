@@ -31,6 +31,7 @@ export default class App extends React.Component {
     this.handleOpenForm = this.handleOpenForm.bind( this );
     this.handleChange = this.handleChange.bind( this );
     this.saveTransaction = this.saveTransaction.bind( this );
+    this.shouldDisableSave = this.shouldDisableSave.bind( this );
 
   }
 
@@ -94,6 +95,23 @@ export default class App extends React.Component {
 
   }
 
+  shouldDisableSave() {
+
+    const { description, amount } = this.state.fields;
+
+    const isDescriptionEmpty = ( description === EMPTY_STRING );
+    const isAmountEmpty = ( amount === EMPTY_STRING );
+
+    const isAnyFieldEmpty = ( isDescriptionEmpty || isAmountEmpty );
+
+    if( isAnyFieldEmpty ) {
+      return true;
+    }
+
+    return false;
+
+  }
+
   render() {
     return (
       <AppContainer>
@@ -107,7 +125,8 @@ export default class App extends React.Component {
             <FormView
               fields={ this.state.fields }
               onChange={ this.handleChange }
-              onSubmit={ this.saveTransaction } />
+              onSubmit={ this.saveTransaction }
+              shouldDisable={ this.shouldDisableSave() } />
           </Modal>
         </AppContent>
         <PlusFAB onPress={ this.handleOpenForm } />
