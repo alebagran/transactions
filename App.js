@@ -5,6 +5,7 @@ import Modal from "react-native-modal";
 import AppContainer from './components/AppContainer';
 import AppHeader from './components/AppHeader';
 import AppContent from './components/AppContent';
+import PlusFAB from './components/PlusFAB';
 
 export default class App extends React.Component {
 
@@ -13,10 +14,11 @@ export default class App extends React.Component {
     super( props );
 
     this.state = {
-      shouldOpenModal: true
+      shouldOpenModal: false
     };
 
     this.handleCloseModal = this.handleCloseModal.bind( this );
+    this.handleOpenModal = this.handleOpenModal.bind( this );
 
   }
 
@@ -32,6 +34,10 @@ export default class App extends React.Component {
     this.setState( { shouldOpenModal: false } );
   }
 
+  handleOpenModal() {
+    this.setState( { shouldOpenModal: true } );
+  }
+
   render() {
     return (
       <AppContainer>
@@ -44,6 +50,7 @@ export default class App extends React.Component {
             onBackdropPress={ this.handleCloseModal } >
           </Modal>
         </AppContent>
+        <PlusFAB onPress={ this.handleOpenModal } />
       </AppContainer>
     );
   }
