@@ -10,6 +10,7 @@ import PlusFAB from './components/PlusFAB';
 import FormView from './components/FormView';
 import { TRANSACTION_TYPES, EMPTY_STRING, DOT } from './assets/js/consts';
 import moment from './assets/js/moment';
+import TransactionItem from './components/TransactionItem';
 
 export default class App extends React.Component {
 

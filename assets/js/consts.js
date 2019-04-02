@@ -6,3 +6,7 @@ export const TRANSACTION_TYPES = {
 export const EMPTY_STRING = '';
 
 export const DOT = '.';
+
+export const MINUS = '-';
+
+export const PLUS = '+';
