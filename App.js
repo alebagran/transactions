@@ -8,18 +8,19 @@ import AppHeader from './components/AppHeader';
 import AppContent from './components/AppContent';
 import PlusFAB from './components/PlusFAB';
 import FormView from './components/FormView';
-import { TRANSACTION_TYPES } from './assets/js/consts';
+import { TRANSACTION_TYPES, EMPTY_STRING } from './assets/js/consts';
 
 export default class App extends React.Component {
 
   constructor( props ) {
-    
+
     super( props );
 
     this.state = {
       shouldOpenModal: false,
       fields: {
-        type: TRANSACTION_TYPES.DEBIT
+        type: TRANSACTION_TYPES.DEBIT,
+        description: EMPTY_STRING,
       }
     };
 
