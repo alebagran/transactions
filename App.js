@@ -17,15 +17,16 @@ export default class App extends React.Component {
     super( props );
 
     this.state = {
-      shouldOpenModal: false,
+      shouldOpenForm: false,
       fields: {
         type: TRANSACTION_TYPES.DEBIT,
         description: EMPTY_STRING,
+        amount: EMPTY_STRING
       }
     };
 
-    this.handleCloseModal = this.handleCloseModal.bind( this );
-    this.handleOpenModal = this.handleOpenModal.bind( this );
+    this.handleCloseForm = this.handleCloseForm.bind( this );
+    this.handleOpenForm = this.handleOpenForm.bind( this );
     this.handleChange = this.handleChange.bind( this );
 
   }
@@ -38,12 +39,20 @@ export default class App extends React.Component {
     } );
   }
 
-  handleCloseModal() {
-    this.setState( { shouldOpenModal: false } );
+  handleCloseForm() {
+    this.setState( ( state ) => update(
+      state, {
+        shouldOpenForm: { $set: false },
+        fields: {
+          description: { $set: EMPTY_STRING },
+          amount: { $set: EMPTY_STRING },
+          type: { $set: TRANSACTION_TYPES.DEBIT }
+      } }
+    ) );
   }
 
-  handleOpenModal() {
-    this.setState( { shouldOpenModal: true } );
+  handleOpenForm() {
+    this.setState( { shouldOpenForm: true } );
   }
 
   handleChange( field, value ) {
@@ -59,13 +68,13 @@ export default class App extends React.Component {
         <AppContent>
           <Modal
             avoidKeyboard={ true }
-            isVisible={ this.state.shouldOpenModal }
-            onBackButtonPress={ this.handleCloseModal }
-            onBackdropPress={ this.handleCloseModal } >
+            isVisible={ this.state.shouldOpenForm }
+            onBackButtonPress={ this.handleCloseForm }
+            onBackdropPress={ this.handleCloseForm } >
             <FormView fields={ this.state.fields } onChange={ this.handleChange } />
           </Modal>
         </AppContent>
-        <PlusFAB onPress={ this.handleOpenModal } />
+        <PlusFAB onPress={ this.handleOpenForm } />
       </AppContainer>
     );
   }
