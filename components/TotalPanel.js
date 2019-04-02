@@ -5,11 +5,11 @@ import { Card, CardItem, H1, H3 } from 'native-base';
 import CurrencyHelper from '../assets/js/CurrencyHelper';
 
 const propTypes = {
-  title: PropTypes.string.isRequired
+  total: PropTypes.number.isRequired
 };
 
 const defaultProps = {
-  title: ''
+  total: ''
 };
 
 const TotalPanel = ( { total } ) => {

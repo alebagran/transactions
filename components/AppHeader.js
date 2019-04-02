@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import { StyleSheet } from 'react-native';
 import { Header, Left, Body, Right, Title } from 'native-base';
 
 const propTypes = {

@@ -1,7 +1,17 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { CardItem, Text, Body, Left, Right } from 'native-base';
 import CurrencyHelper from './../assets/js/CurrencyHelper';
 import { PLUS, MINUS } from './../assets/js/consts'
+
+const propTypes = {
+  description: PropTypes.string.isRequired,
+  amount: PropTypes.oneOfType( [ PropTypes.string, PropTypes.number ] ).isRequired,
+  date: PropTypes.string.isRequired,
+  isCredit: PropTypes.bool.isRequired
+};
+
+const defaultProps = {};
 
 const TransactionItem = ( {
   description,
@@ -27,5 +37,8 @@ const TransactionItem = ( {
       </CardItem>
     );
 }
+
+TransactionItem.propTypes = propTypes;
+TransactionItem.defaultProps = defaultProps;
 
 export default TransactionItem;

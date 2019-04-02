@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
 import { Card, CardItem, Text, H3 } from 'native-base';
 import TransactionItem from './../components/TransactionItem';
@@ -10,6 +11,14 @@ const renderTransaction = ( item ) =>
     description={ item.description }
     amount={ item.amount }
     date={ item.date.format( "DD/MM/YYYY" ) } />
+    
+const propTypes = {
+  title: PropTypes.string.isRequired,
+  itemx: PropTypes.array.isRequired,
+  emptyPlaceholder: PropTypes.string.isRequired
+};
+      
+const defaultProps = {};
 
 const TransactionList = ( { title, items, emptyPlaceholder } ) => {
 
@@ -37,5 +46,8 @@ const styles = StyleSheet.create( {
     marginBottom: 2
   }
 } );
+
+TransactionList.propTypes = propTypes;
+TransactionList.defaultProps = defaultProps;
 
 export default TransactionList;

@@ -1,8 +1,18 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardItem, Button, Left, Body, Right, Text } from 'native-base';
 import InputPicker from './../components/InputPicker';
 import InputText from './../components/InputText';
 import InputCurrency from './../components/InputCurrency';
+
+const propTypes = {
+  fields: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  shouldDisableSave: PropTypes.bool.isRequired
+};
+
+const defaultProps = {};
 
 const FormView = ( {
   fields,
@@ -47,5 +57,8 @@ const FormView = ( {
     </CardItem>
   </Card>
 );
+
+FormView.propTypes = propTypes;
+FormView.defaultProps = defaultProps;
 
 export default FormView;
