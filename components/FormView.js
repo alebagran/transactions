@@ -46,8 +46,8 @@ const FormView = ( {
     <CardItem footer bordered >
       <Left />
       <Body>
-        <Button
-          primary 
+      <Button
+          style={ { backgroundColor: shouldDisableSave ? 'lightgray' : '#4099ff' } } 
           onPress={ onSubmit }
           disabled={ shouldDisableSave } >
           <Text>Salvar</Text>

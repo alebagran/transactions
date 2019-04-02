@@ -19,7 +19,7 @@ const PlusFAB = ( { onPress } ) => (
 
 const styles = StyleSheet.create( {
   fab: {
-    backgroundColor: '#4099ff',
+    backgroundColor: '#e36209',
     position: 'absolute',
     margin: 16,
     right: 0,
