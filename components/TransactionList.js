@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { Card, CardItem, Text, H3 } from 'native-base';
 import TransactionItem from './../components/TransactionItem';
 import moment from './../assets/js/moment';
@@ -33,7 +33,9 @@ const TransactionList = ( { title, items, emptyPlaceholder } ) => {
       { isItemsEmpty && <CardItem bordered>
         <Text>{ emptyPlaceholder }</Text>
       </CardItem> }
-      { items.map( ( item ) => renderTransaction( item ) ) }
+      <FlatList
+          data={ items }
+          renderItem={ ( { item } ) => renderTransaction( item ) } />
     </Card>
   );
 
