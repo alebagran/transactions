@@ -3,6 +3,7 @@ import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import AppContainer from './components/AppContainer';
 import AppHeader from './components/AppHeader';
+import AppContent from './components/AppContent';
 
 export default class App extends React.Component {
 
@@ -18,6 +19,7 @@ export default class App extends React.Component {
     return (
       <AppContainer>
         <AppHeader title="Transações" />
+        <AppContent></AppContent>
       </AppContainer>
     );
   }
