@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Card, CardItem, Text } from 'native-base';
+import { Card, CardItem, Button, Left, Body, Right, Text } from 'native-base';
 import InputPicker from './../components/InputPicker';
 import InputText from './../components/InputText';
 import InputCurrency from './../components/InputCurrency';
 
-const FormView = ( { fields, onChange } ) => (
+const FormView = ( { fields, onChange, onSubmit } ) => (
   <Card>
     <CardItem bordered >
       <Text>Nova Transação</Text>
@@ -28,6 +28,15 @@ const FormView = ( { fields, onChange } ) => (
         name="amount"
         value={ fields.amount }
         onChange={ onChange } />
+    </CardItem>
+    <CardItem footer bordered >
+      <Left />
+      <Body>
+        <Button primary onPress={ onSubmit } >
+          <Text>Salvar</Text>
+        </Button>
+      </Body>
+      <Right />
     </CardItem>
   </Card>
 );

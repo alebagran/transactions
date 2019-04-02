@@ -8,7 +8,8 @@ import AppHeader from './components/AppHeader';
 import AppContent from './components/AppContent';
 import PlusFAB from './components/PlusFAB';
 import FormView from './components/FormView';
-import { TRANSACTION_TYPES, EMPTY_STRING } from './assets/js/consts';
+import { TRANSACTION_TYPES, EMPTY_STRING, DOT } from './assets/js/consts';
+import moment from './assets/js/moment';
 
 export default class App extends React.Component {
 
@@ -22,12 +23,14 @@ export default class App extends React.Component {
         type: TRANSACTION_TYPES.DEBIT,
         description: EMPTY_STRING,
         amount: EMPTY_STRING
-      }
+      },
+      transactions: []
     };
 
     this.handleCloseForm = this.handleCloseForm.bind( this );
     this.handleOpenForm = this.handleOpenForm.bind( this );
     this.handleChange = this.handleChange.bind( this );
+    this.saveTransaction = this.saveTransaction.bind( this );
 
   }
 
@@ -61,6 +64,36 @@ export default class App extends React.Component {
     ) );
   }
 
+  saveTransaction() {
+
+    const {
+      description,
+      amount,
+      type
+      } = this.state.fields;
+
+    const amountStr = amount.toString();
+    const lastChar = amountStr.substring( amountStr.length - 1 );
+    const isLastCharDot = ( lastChar === DOT );
+    let sanitizedAmount = amount;
+
+    if( isLastCharDot ) {
+      sanitizedAmount = Number( amountStr.slice( 0, -1 ) );
+    }
+
+    const newTransaction = {
+      description: description,
+      amount: sanitizedAmount,
+      date: moment(),
+      isCredit: ( type === TRANSACTION_TYPES.CREDIT )
+    };
+
+    this.setState( ( state ) => update(
+      state, { transactions: { $push: [ newTransaction ] } }
+    ), () => this.handleCloseForm() );
+
+  }
+
   render() {
     return (
       <AppContainer>
@@ -71,7 +104,10 @@ export default class App extends React.Component {
             isVisible={ this.state.shouldOpenForm }
             onBackButtonPress={ this.handleCloseForm }
             onBackdropPress={ this.handleCloseForm } >
-            <FormView fields={ this.state.fields } onChange={ this.handleChange } />
+            <FormView
+              fields={ this.state.fields }
+              onChange={ this.handleChange }
+              onSubmit={ this.saveTransaction } />
           </Modal>
         </AppContent>
         <PlusFAB onPress={ this.handleOpenForm } />
