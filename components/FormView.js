@@ -47,7 +47,7 @@ const FormView = ( {
       <Left />
       <Body>
       <Button
-          style={ { backgroundColor: shouldDisableSave ? 'lightgray' : '#4099ff' } } 
+          primary
           onPress={ onSubmit }
           disabled={ shouldDisableSave } >
           <Text>Salvar</Text>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
 import { Card, CardItem, Text, H3 } from 'native-base';
 import TransactionItem from './../components/TransactionItem';
+import moment from './../assets/js/moment';
 
 const renderTransaction = ( item ) =>
   <TransactionItem
@@ -10,11 +11,11 @@ const renderTransaction = ( item ) =>
     isCredit={ item.isCredit }
     description={ item.description }
     amount={ item.amount }
-    date={ item.date.format( "DD/MM/YYYY" ) } />
+    date={ moment( item.date ).format( "DD/MM/YYYY" ) } />
     
 const propTypes = {
   title: PropTypes.string.isRequired,
-  itemx: PropTypes.array.isRequired,
+  item: PropTypes.array.isRequired,
   emptyPlaceholder: PropTypes.string.isRequired
 };
       

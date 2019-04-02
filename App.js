@@ -12,6 +12,8 @@ import { TRANSACTION_TYPES, EMPTY_STRING, DOT } from './assets/js/consts';
 import moment from './assets/js/moment';
 import TransactionList from './components/TransactionList';
 import TotalPanel from './components/TotalPanel';
+import { AsyncStorage } from 'react-native'
+
 
 export default class App extends React.Component {
 
@@ -36,6 +38,34 @@ export default class App extends React.Component {
     this.shouldDisableSave = this.shouldDisableSave.bind( this );
     this.calculateTotal = this.calculateTotal.bind( this );
 
+  }
+
+  loadTransactions = async () => {
+    try {
+      const transactions = await AsyncStorage.getItem( 'transactions' )
+      if ( transactions !== null ) {
+        this.setState( { transactions: JSON.parse( transactions ) } )
+      }
+    } catch ( e ) {
+      console.error( 'Failed to load name.' );
+    }
+  }
+
+  storeTransaction = async ( newTransaction ) => {
+    try {
+      const transactions = await AsyncStorage.getItem( 'transactions' )
+      if ( transactions !== null ) {
+        const parsed = JSON.parse( transactions );
+        parsed.push( newTransaction );
+        await AsyncStorage.setItem( 'transactions', JSON.stringify( parsed ) ) 
+      }
+    } catch ( e ) {
+      console.error( 'Failed to save name.' )
+    }
+  }
+
+  componentWillMount() {
+    this.loadTransactions()
   }
 
   async componentDidMount() {
@@ -92,6 +122,8 @@ export default class App extends React.Component {
       isCredit: ( type === TRANSACTION_TYPES.CREDIT )
     };
 
+    this.storeTransaction( newTransaction );
+
     this.setState( ( state ) => update(
       state, { transactions: { $push: [ newTransaction ] } }
     ), () => this.handleCloseForm() );
@@ -128,6 +160,9 @@ export default class App extends React.Component {
   }
 
   render() {
+
+    console.log( "STATE: ", this.state );
+
     return (
       <AppContainer>
         <AppHeader title="Transações" />

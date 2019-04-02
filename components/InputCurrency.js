@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, TextInput } from 'react-native';
 import { Item, Input, Label } from 'native-base';
 
 const propTypes = {
