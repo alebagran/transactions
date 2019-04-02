@@ -37,7 +37,6 @@ export default class App extends React.Component {
     this.shouldDisableSave = this.shouldDisableSave.bind( this );
     this.calculateTotal = this.calculateTotal.bind( this );
     this.transactionsByRecentDate = this.transactionsByRecentDate.bind( this );
-    this.getHighestId = this.getHighestId.bind( this );
 
   }
 
@@ -53,14 +52,9 @@ export default class App extends React.Component {
     }
   }
 
-  storeTransaction = async ( newTransaction ) => {
+  storeTransaction = async () => {
     try {
-      const transactions = await AsyncStorage.getItem( 'transactions' )
-      if ( transactions !== null ) {
-        const parsed = JSON.parse( transactions );
-        parsed.push( newTransaction );
-        await AsyncStorage.setItem( 'transactions', JSON.stringify( parsed ) ) 
-      }
+        await AsyncStorage.setItem( 'transactions', JSON.stringify( this.state.transactions ) ) 
     } catch ( e ) {
       // error handling
     }
@@ -100,11 +94,6 @@ export default class App extends React.Component {
     ) );
   }
 
-  getHighestId() {
-    const { transactions } = this.state;
-    return Math.max.apply( Math, transactions.map( function( o ) { return o.id; } ) )
-  }
-
   saveTransaction() {
 
     const {
@@ -122,21 +111,20 @@ export default class App extends React.Component {
       sanitizedAmount = Number( amountStr.slice( 0, -1 ) );
     }
 
-    const highestId = this.getHighestId();
-
     const newTransaction = {
-      id: highestId ? highestId + 1 : 1,
+      id: this.state.transactions.length + 1,
       description: description,
       amount: sanitizedAmount,
       date: moment(),
       isCredit: ( type === TRANSACTION_TYPES.CREDIT )
     };
 
-    this.storeTransaction( newTransaction );
-
     this.setState( ( state ) => update(
       state, { transactions: { $push: [ newTransaction ] } }
-    ), () => this.handleCloseForm() );
+    ), () => {
+      this.handleCloseForm();
+      this.storeTransaction();
+    } );
 
   }
 
@@ -176,9 +164,6 @@ export default class App extends React.Component {
   }
 
   render() {
-
-    console.log( "STATE: ", this.state );
-
     return (
       <AppContainer>
         <AppHeader title="Transações" />
