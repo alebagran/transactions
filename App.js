@@ -10,7 +10,7 @@ import PlusFAB from './components/PlusFAB';
 import FormView from './components/FormView';
 import { TRANSACTION_TYPES, EMPTY_STRING, DOT } from './assets/js/consts';
 import moment from './assets/js/moment';
-import TransactionItem from './components/TransactionItem';
+import TransactionList from './components/TransactionList';
 
 export default class App extends React.Component {
 
@@ -127,8 +127,12 @@ export default class App extends React.Component {
               fields={ this.state.fields }
               onChange={ this.handleChange }
               onSubmit={ this.saveTransaction }
-              shouldDisable={ this.shouldDisableSave() } />
+              shouldDisableSave={ this.shouldDisableSave() } />
           </Modal>
+          <TransactionList
+            title="Minhas Transações"
+            emptyPlaceholder="Não há transações salvas"
+            items={ this.state.transactions } />
         </AppContent>
         <PlusFAB onPress={ this.handleOpenForm } />
       </AppContainer>

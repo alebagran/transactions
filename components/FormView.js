@@ -8,7 +8,7 @@ const FormView = ( {
   fields,
   onChange,
   onSubmit,
-  shouldDisable } ) => (
+  shouldDisableSave } ) => (
   <Card>
     <CardItem bordered >
       <Text>Nova Transação</Text>
@@ -39,7 +39,7 @@ const FormView = ( {
         <Button
           primary 
           onPress={ onSubmit }
-          disabled={ shouldDisable } >
+          disabled={ shouldDisableSave } >
           <Text>Salvar</Text>
         </Button>
       </Body>
