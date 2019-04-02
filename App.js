@@ -1,11 +1,14 @@
 import React from 'react';
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import update from 'immutability-helper';
 import Modal from "react-native-modal";
 import AppContainer from './components/AppContainer';
 import AppHeader from './components/AppHeader';
 import AppContent from './components/AppContent';
 import PlusFAB from './components/PlusFAB';
+import FormView from './components/FormView';
+import { TRANSACTION_TYPES } from './assets/js/consts';
 
 export default class App extends React.Component {
 
@@ -14,11 +17,15 @@ export default class App extends React.Component {
     super( props );
 
     this.state = {
-      shouldOpenModal: false
+      shouldOpenModal: false,
+      fields: {
+        type: TRANSACTION_TYPES.DEBIT
+      }
     };
 
     this.handleCloseModal = this.handleCloseModal.bind( this );
     this.handleOpenModal = this.handleOpenModal.bind( this );
+    this.handleChange = this.handleChange.bind( this );
 
   }
 
@@ -38,6 +45,12 @@ export default class App extends React.Component {
     this.setState( { shouldOpenModal: true } );
   }
 
+  handleChange( field, value ) {
+    this.setState( ( state ) => update(
+      state, { fields: { [ field ]: { $set: value } } }
+    ) );
+  }
+
   render() {
     return (
       <AppContainer>
@@ -48,6 +61,7 @@ export default class App extends React.Component {
             isVisible={ this.state.shouldOpenModal }
             onBackButtonPress={ this.handleCloseModal }
             onBackdropPress={ this.handleCloseModal } >
+            <FormView fields={ this.state.fields } onChange={ this.handleChange } />
           </Modal>
         </AppContent>
         <PlusFAB onPress={ this.handleOpenModal } />
