@@ -10,6 +10,33 @@ class CurrencyHelper {
       ;
   }
 
+  static BRLToNumber( str ) {
+    return isNaN( str ) == false
+    ? parseFloat( str )
+    : parseFloat(
+      str
+        .replace( "R$","" )
+        .replace( ".","" )
+        .replace( ",","." ) 
+      );
+  }
+
+  static getSignalPrefix( value ) {
+
+    const isValueZero = ( value === 0 );
+    if( isValueZero ) {
+      return EMPTY_STRING;
+    }
+
+    const isValuePositive = ( value > 0 );
+    if( isValuePositive ) {
+      return PLUS;
+    }
+
+    return MINUS;
+
+  }
+
 }
 
 export default CurrencyHelper;

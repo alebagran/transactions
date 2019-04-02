@@ -11,6 +11,7 @@ import FormView from './components/FormView';
 import { TRANSACTION_TYPES, EMPTY_STRING, DOT } from './assets/js/consts';
 import moment from './assets/js/moment';
 import TransactionList from './components/TransactionList';
+import TotalPanel from './components/TotalPanel';
 
 export default class App extends React.Component {
 
@@ -33,6 +34,7 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind( this );
     this.saveTransaction = this.saveTransaction.bind( this );
     this.shouldDisableSave = this.shouldDisableSave.bind( this );
+    this.calculateTotal = this.calculateTotal.bind( this );
 
   }
 
@@ -49,9 +51,9 @@ export default class App extends React.Component {
       state, {
         shouldOpenForm: { $set: false },
         fields: {
+          type: { $set: TRANSACTION_TYPES.DEBIT },
           description: { $set: EMPTY_STRING },
-          amount: { $set: EMPTY_STRING },
-          type: { $set: TRANSACTION_TYPES.DEBIT }
+          amount: { $set: EMPTY_STRING }
       } }
     ) );
   }
@@ -113,6 +115,18 @@ export default class App extends React.Component {
 
   }
 
+  calculateTotal() {
+    const { transactions } = this.state;
+    const sum = 0;
+    const total =  transactions.reduce( ( sum, b ) => {
+        const amountB = parseFloat( b.amount );
+        const sumVal = parseFloat( sum );
+        const newVal = b.isCredit ? amountB : -amountB;
+        return ( sumVal + newVal ).toFixed( 2 );
+    }, sum );
+    return parseFloat( total );
+  }
+
   render() {
     return (
       <AppContainer>
@@ -129,6 +143,7 @@ export default class App extends React.Component {
               onSubmit={ this.saveTransaction }
               shouldDisableSave={ this.shouldDisableSave() } />
           </Modal>
+          <TotalPanel total={ this.calculateTotal() } />
           <TransactionList
             title="Minhas Transações"
             emptyPlaceholder="Não há transações salvas"
